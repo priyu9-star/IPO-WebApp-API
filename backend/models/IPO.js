@@ -1,24 +1,31 @@
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/db");
 
-const mongoose = require('mongoose');
-
-const ipoSchema = new mongoose.Schema({
-  companyName: { type: String, required: true, trim: true },
-  pricePerShare: { type: Number, required: true },
-  totalShares: { type: Number, required: true },
-  openDate: { type: Date, required: true },
-  closeDate: { type: Date, required: true },
-  logo: { type: String, required: true },  // Store logo filename
-  createdAt: { type: Date, default: Date.now }
+const IPO = sequelize.define("IPO", {
+  companyName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  pricePerShare: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  totalShares: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  openDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  closeDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  logo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
-
-// Normalize data before saving
-ipoSchema.pre('save', function (next) {
-  this.companyName = this.companyName.trim();
-  this.openDate = new Date(this.openDate);
-  this.closeDate = new Date(this.closeDate);
-  next();
-});
-
-const IPO = mongoose.model('IPO', ipoSchema);
 
 module.exports = IPO;
