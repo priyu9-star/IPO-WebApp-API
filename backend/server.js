@@ -3,9 +3,19 @@ const cors = require("cors");
 require("dotenv").config();
 const pool = require("./config/db"); // Import database connection
 
+
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests from this IP, please try again after 15 minutes'
+});
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(globalLimiter);
 
 // ✅ Test API
 app.get("/", (req, res) => {
@@ -74,24 +84,12 @@ app.put("/api/ipos/:id", async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const { connectDB } = require("./db");
+const authRoutes = require("./routes/authRoutes");
+app.use('/api/auth', authRoutes);
 const ipoRoutes = require("./routes/ipoRoutes");
 const path = require("path");
 
-dotenv.config();
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-connectDB();
-
-app.use(express.json());
-app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/ipos", ipoRoutes);

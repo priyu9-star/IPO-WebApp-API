@@ -8,7 +8,6 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -17,6 +16,18 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+
+CREATE TABLE IF NOT EXISTS public.ipos (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    price NUMERIC,
+    start_date DATE,
+    end_date DATE,
+    issue_size VARCHAR(100),
+    issue_type VARCHAR(50),
+    listing_date DATE,
+    status VARCHAR(50)
+);
 --
 -- Data for Name: ipos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
