@@ -100,3 +100,126 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
+const express = require("express");
+const multer = require("multer");
+const nodemailer = require("nodemailer");
+const Broker = require("../models/Broker");
+const dotenv = require("dotenv");
+
+dotenv.config();
+const router = express.Router();
+
+// ✅ Multer for File Upload
+const storage = multer.diskStorage({
+  destination: "./uploads",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+
+// ✅ Email Configuration
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+// ✅ POST: Register new Broker
+router.post("/register", upload.single("license"), async (req, res) => {
+  try {
+    const { name, company, email, phone, licenseNumber, status } = req.body;
+    const licenseFile = req.file ? req.file.filename : null;
+
+    if (!licenseFile) {
+      return res.status(400).json({ message: "License upload failed" });
+    }
+
+    const broker = await Broker.create({
+      name,
+      company,
+      email,
+      phone,
+      licenseNumber,
+      status,
+      licenseFile,
+    });
+
+    // Send Email Notification
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: "admin@example.com",
+      subject: "New Broker Registered",
+      text: `A new broker has been registered: ${name}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(201).json({ message: "Broker registered successfully", broker });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ✅ GET: Fetch All Brokers
+router.get("/", async (req, res) => {
+  try {
+    const brokers = await Broker.findAll();
+    res.status(200).json(brokers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch brokers" });
+  }
+});
+
+// ✅ GET: Fetch Single Broker by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const broker = await Broker.findByPk(req.params.id);
+    if (!broker) {
+      return res.status(404).json({ message: "Broker not found" });
+    }
+    res.status(200).json(broker);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch broker" });
+  }
+});
+
+// ✅ PUT: Update Broker by ID
+router.put("/:id", async (req, res) => {
+  try {
+    const { name, company, email, phone, licenseNumber, status } = req.body;
+    const broker = await Broker.findByPk(req.params.id);
+    if (!broker) {
+      return res.status(404).json({ message: "Broker not found" });
+    }
+
+    await broker.update({ name, company, email, phone, licenseNumber, status });
+    res.status(200).json({ message: "Broker updated successfully", broker });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to update broker" });
+  }
+});
+
+// ✅ DELETE: Remove Broker by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const broker = await Broker.findByPk(req.params.id);
+    if (!broker) {
+      return res.status(404).json({ message: "Broker not found" });
+    }
+
+    await broker.destroy();
+    res.status(200).json({ message: "Broker deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to delete broker" });
+  }
+});
+
+module.exports = router;
