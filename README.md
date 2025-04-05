@@ -24,7 +24,6 @@ This application displays comprehensive IPO data including price bands, issue de
 - **Backend**: [Express.js](https://expressjs.com/)
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **ORM**: [Sequelize](https://sequelize.org/)
-- **Deployment**: Vercel/Netlify (Frontend) + Render/Heroku/DigitalOcean (Backend)
 
 ---
 
