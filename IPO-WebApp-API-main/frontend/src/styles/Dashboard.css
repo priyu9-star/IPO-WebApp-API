@@ -1,0 +1,12 @@
+.main-dashboard {
+    width: calc(100% - 250px);
+    flex-direction: row;
+    height: 100vh;
+}
+
+.dashboard-links {
+    display: flex;
+    flex-direction: column;
+}
+
+

@@ -1,0 +1,168 @@
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #f2f6fa;
+  padding: 20px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Show sidebar on desktop */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 250px;
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #f2f6fa;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    color: #735da4;
+    display:block;
+  }
+
+  /* Ensure menu items are visible */
+  .menu-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu-list .menu-elem {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    color: grey;  /* Ensure text is visible */
+    font-size: 16px;
+    
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .menu-list .menu-elem:hover {
+    background-color: #e4dff0;
+    color: blue;
+  }
+
+  /* Overlay to close menu when clicking outside */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+  }
+}
+
+
+/* Menu List */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list .menu-elem {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  cursor: pointer;
+  color: grey;  /* Ensure text is visible */
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.menu-list .menu-elem:hover {
+  background-color: #e4dff0;
+  color: #735da4;
+}
+
+.menu-icon span {
+    margin-left: 10px;
+}
+
+/* Header */
+.heading-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#heading_bg {
+  width: 30px;
+  height: 30px;
+  background-color: #735da4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#heading_text {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#heading {
+  color: #735da4;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+  color: #735da4;
+  display:none;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}

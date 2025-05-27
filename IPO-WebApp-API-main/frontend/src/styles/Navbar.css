@@ -1,0 +1,155 @@
+/* Reset default margins and padding */
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*  }*/
+  
+  
+  /* Navbar Styles */
+  .navbar {
+    background: #ffffff;
+
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%;
+    font-family: Arial, sans-serif;
+    padding: 15px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    
+  }
+  
+  .navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0b0b0b;
+  }
+  
+  .logo img {
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  /* Navigation Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-self:center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links .nav-list {
+    display: inline;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #877f7f;
+    font-weight: 500;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  .new-badge {
+    background: #007bff;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  /* Auth Buttons */
+  .auth-buttons {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .auth-buttons button {
+
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .sign-in {
+    background: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    margin-right:5px;
+  }
+  
+  .sign-in:hover {
+    background: #007bff;
+    color: white;
+  }
+  
+  .sign-up {
+    background: #007bff;
+    color: white;
+  }
+  
+  .sign-up:hover {
+    background: #0056b3;
+  }
+  
+  /* Mobile View */
+  .menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .menu-icon {
+      display: block;
+    }
+  
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      text-align: center;
+    }
+  
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .nav-links .nav-list {
+      padding: 10px 0;
+    }
+  
+    .auth-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
